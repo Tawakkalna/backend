@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use HasFactory, Notifiable;
+    use Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +19,17 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'name_ar',
         'email',
         'password',
+        'date_of_birth',
+        'national_id',
+        'immunity_status',
+        'passport_no',
+        'blood_type',
+        'immunity_date',
+        'vaccine_id',
+        'profile_pic'
     ];
 
     /**
@@ -28,16 +38,32 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function vaccine()
+    {
+        return $this->hasOne(Vaccine::class);
+    }
+
+    public function permits()
+    {
+        return $this->hasMany(Permit::class);
+    }
+
+    public function invited_to_permits()
+    {
+        return $this->belongsToMany(Permit::class, 'permit_user', 'user_id', 'permit_id');
+    }
+
+    // public function
 }
