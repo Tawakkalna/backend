@@ -88,6 +88,6 @@ php artisan serve
 
 > Abdulrahman Bin Maneea ➝ [@AWManeea](https://github.com/AWManeea)
 
-> Abdulaziz Alasmari ➝ [@AbdulazizAlasmri](https://github.com/AbdulazizAlasmri)
+> Abdulaziz Alasmari ➝ [@AbdulazizAlasmri](https://github.com/Abdulaziz-Alasmari)
 
 </div>
